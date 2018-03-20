@@ -2,7 +2,6 @@
 
 namespace KeriganSolutions\FacebookFeed\Fetchers;
 
-use App\User;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use KeriganSolutions\FacebookFeed\Contracts\DataFetcher;
@@ -15,14 +14,13 @@ class EventsFetcher implements DataFetcher
     protected $client;
     protected $accessToken;
     protected $pageId;
-    protected $realtor;
 
-    public function __construct()
+
+    public function __construct($accessToken, $pageId)
     {
-        $this->realtor = User::realtor();
         $this->client = new Client(['base_uri' => 'https://graph.facebook.com/v2.11']);
-        $this->accessToken = $this->realtor->fb_access_token;
-        $this->pageId      = $this->realtor->fb_page_id;
+        $this->accessToken = $accessToken;
+        $this->pageId      = $pageId;
     }
 
     public function get($limit, $before, $after)
