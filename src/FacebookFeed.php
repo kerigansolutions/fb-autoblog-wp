@@ -27,13 +27,13 @@ class FacebookFeed
      *
      * @return KeriganSolutions\FacebookFeed\Feed
      */
-    public static function fetch($limit = 5, $before = null, $after = null)
+    public function fetch($limit = 5, $before = null, $after = null)
     {
         $facebook = new FacebookRequest($limit, $before, $after);
         $posts    = new PostFetcher($this->accessToken, $this->pageId);
+        $parser   = new PostParser();
 
         $response = $facebook->fetch($posts);
-        $parser   = new PostParser();
 
         $feed     = new Feed($parser, $response);
 
