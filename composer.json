@@ -1,5 +1,5 @@
 {
-    "name": "kerigansolutions/facebookfeed",
+    "name": "kerigansolutions/fb-autoblog-wp",
     "require": {
         "guzzlehttp/guzzle": "^6.3",
         "nesbot/carbon": "^1.22"
