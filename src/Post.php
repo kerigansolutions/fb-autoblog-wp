@@ -15,8 +15,6 @@ class Post
 
     public function format()
     {
-        $fetcher = new EventsFetcher();
-
         if ($this->data->type == 'video') {
             $video            = new Video();
             $caption  = $this->data->caption ?? 'Try Facebook Player';
