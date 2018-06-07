@@ -38,9 +38,8 @@ class PostFetcher implements DataFetcher
             return json_decode($response->getBody());
 
         } catch (ClientException $e) {
+            // Do nothing
             // Most likely a bad token or improperly formatted request
-            echo $e->getMessage();
-            echo '<p>This content is currently unavailable due to an error.</p>';
         }
     }
 }
