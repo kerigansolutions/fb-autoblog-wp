@@ -10,9 +10,11 @@ class PostParser implements DataParser
     public function parse($rawPosts)
     {
         $parsed = [];
-        foreach ($rawPosts as $data) {
-            $post = (new Post($data))->format()->data;
-            array_push($parsed, $post);
+        if (is_array($rawPosts)) {
+            foreach ($rawPosts as $data) {
+                $post = (new Post($data))->format()->data;
+                array_push($parsed, $post);
+            }
         }
 
         return $parsed;
