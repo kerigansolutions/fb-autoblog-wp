@@ -2,9 +2,6 @@
 
 namespace KeriganSolutions\FacebookFeed;
 
-use Carbon\Carbon;
-
-
 class Event
 {
     public $data;

@@ -18,7 +18,7 @@ class EventsFetcher implements DataFetcher
 
     public function __construct($accessToken, $pageId)
     {
-        $this->client = new Client(['base_uri' => 'https://graph.facebook.com/v2.11']);
+        $this->client = new Client(['base_uri' => 'https://graph.facebook.com/v7.0']);
         $this->accessToken = $accessToken;
         $this->pageId      = $pageId;
     }
