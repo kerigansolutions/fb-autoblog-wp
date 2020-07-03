@@ -12,6 +12,15 @@ use KeriganSolutions\FacebookFeed\Parsers\ReviewParser;
 
 class FacebookReviews
 {
+    public $pageId;
+    public $accessToken;
+
+    public function __construct($pageId, $accessToken)
+    {
+        $this->accessToken = $accessToken;
+        $this->pageId      = $pageId;
+    }
+
     /**
      * @param int $limit The number of posts to display
      * @param string $before The cursor before the data
@@ -22,11 +31,9 @@ class FacebookReviews
     public function fetch($limit = 5, $before = null, $after = null)
     {
         $facebook = new FacebookRequest($limit, $before, $after);
-        $reviews    = new ReviewsFetcher();
-
+        $reviews  = new ReviewsFetcher($this->accessToken, $this->pageId);
         $response = $facebook->fetch($reviews);
         $parser   = new ReviewParser();
-
         $feed     = new Feed($parser, $response);
 
         return $feed->output();

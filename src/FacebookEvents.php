@@ -10,7 +10,10 @@ use KeriganSolutions\FacebookFeed\Parsers\EventParser;
 
 class FacebookEvents
 {
-    public function __construct($accessToken, $pageId)
+    public $pageId;
+    public $accessToken;
+
+    public function __construct($pageId, $accessToken)
     {
         $this->client = new Client(['base_uri' => 'https://graph.facebook.com/v7.0']);
         $this->accessToken = $accessToken;
@@ -20,7 +23,7 @@ class FacebookEvents
     public function fetch($limit = 5, $before = null, $after = null)
     {
         $facebook = new FacebookRequest($limit, $before, $after);
-        $events   = new EventsFetcher();
+        $events   = new EventsFetcher($this->accessToken, $this->pageId);
         $response = $facebook->fetch($events);
         $feed     = new Feed(new EventParser(), $response);
 

@@ -9,12 +9,13 @@ class FacebookPhotoGallery
     protected $pageId;
     protected $accessToken;
 
-    public function __construct()
+    public function __construct($pageId, $accessToken)
     {
-        $this->accessToken = auth()->user()->fb_access_token;
-        $this->pageId      = auth()->user()->fb_page_id;
+        $this->pageId      = $pageId;
+        $this->accessToken = $accessToken;
         $this->client      = new Client(['base_uri' => 'https://graph.facebook.com/v7.0/']);
     }
+    
     public function albums($limit = null, $before = null, $after = null)
     {
         $fields = 'id,name,link,created_time,cover_photo{picture,images.limit(1)}';
