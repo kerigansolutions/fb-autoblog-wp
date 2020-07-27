@@ -1,8 +1,8 @@
 {
     "name": "kerigansolutions/fb-autoblog-wp",
     "require": {
-        "guzzlehttp/guzzle": "^6.3",
-        "nesbot/carbon": "^1.22"
+        "guzzlehttp/guzzle": "^6",
+        "nesbot/carbon": "^2"
     },
     "autoload": {
         "psr-4" : {
