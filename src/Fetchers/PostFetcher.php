@@ -8,7 +8,7 @@ use KeriganSolutions\FacebookFeed\Contracts\DataFetcher;
 
 class PostFetcher implements DataFetcher
 {
-    const FEED = 'permalink_url,full_picture,message,status_type,created_time,attachments{target,media}';
+    const FEED = 'permalink_url,full_picture,message,status_type,created_time,attachments.limit(10){target,media,description,description_tags,media_type,title,type,unshimmed_url,url,subattachments},event,likes{id,name,pic_square,pic_large,link}';
 
     protected $client;
     protected $pageId;
