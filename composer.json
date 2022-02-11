@@ -1,7 +1,7 @@
 {
     "name": "kerigansolutions/fb-autoblog-wp",
     "require": {
-        "guzzlehttp/guzzle": "^6",
+        "guzzlehttp/guzzle": "^7",
         "nesbot/carbon": "^2"
     },
     "autoload": {
@@ -14,6 +14,10 @@
         {
             "name": "Daron Adkins",
             "email": "daron.adkins@gmail.com"
+        },
+        {
+            "name": "Bryan Baird",
+            "email": "bbaird85@gmail.com"
         }
     ]
 }

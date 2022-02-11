@@ -13,7 +13,7 @@ class FacebookPhotoGallery
     {
         $this->pageId      = $pageId;
         $this->accessToken = $accessToken;
-        $this->client      = new Client(['base_uri' => 'https://graph.facebook.com/v7.0/']);
+        $this->client      = new Client(['base_uri' => 'https://graph.facebook.com/v12.0/']);
     }
     
     public function albums($limit = null, $before = null, $after = null)
