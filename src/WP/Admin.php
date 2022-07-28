@@ -130,9 +130,7 @@ class Admin
   public function addMenus()
   {
     add_menu_page("Facebook Settings", "Facebook Settings", "administrator", 'kma-facebook', function () {
-      wp_enqueue_style('facebook-admin-css', dirname(__FILE__) . '/dist/styles/facebook-admin.css', [], null);
-      wp_enqueue_script('facebook-admin-scripts', dirname(__FILE__) . '/dist/scripts/facebook-admin.js', [], null);
-      include(wp_normalize_path( dirname(__FILE__) . '/dist/AdminOverview.php'));
+      include(wp_normalize_path( dirname(dirname(dirname(__FILE__))) . '/dist/AdminOverview.php'));
     }, "dashicons-admin-generic");
   }
 

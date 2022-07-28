@@ -2,7 +2,7 @@
 
 use KeriganSolutions\FacebookFeed\WP\Admin;
 
-$facebook = new Facebook();
+$facebook = new Admin();
 
 $tokenExpires    = $facebook->getTokenExpiryDate();
 $FacebookPageID  = (isset($_POST['facebook_page_id']) ? sanitize_text_field($_POST['facebook_page_id']) : get_option('facebook_page_id'));
@@ -22,6 +22,7 @@ if (isset($_POST['facebook_submit_secret_settings']) && $_POST['facebook_submit_
 }
 
 ?>
+<link href="/styles/facebook-admin.css" rel="stylesheet">
 <div id="kma-facebook-settings" class="text-base" style="margin-left:-20px;">
   <div class="p-8 lg:p-12">
     <h1 class="font-bold text-xl lg:text-4xl text-primary">
@@ -139,6 +140,7 @@ if (isset($_POST['facebook_submit_secret_settings']) && $_POST['facebook_submit_
     </div>
   </div>
 </div>
+<script src="/scripts/facebook-admin.js" ></script>
 <script>
   window.fbAsyncInit = function () {
     FB.init({
