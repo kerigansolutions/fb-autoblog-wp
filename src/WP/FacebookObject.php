@@ -1,6 +1,6 @@
 <?php
 
-namespace KMA\Modules\Facebook;
+namespace KeriganSolutions\FacebookFeed\WP;
 
 use KeriganSolutions\FacebookFeed\FacebookFeed;
 use KeriganSolutions\FacebookFeed\FacebookReviews;
