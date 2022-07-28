@@ -1,0 +1,9 @@
+/********
+ * Admin-only styles for Facebook settings page
+ ********/
+
+@tailwind components;
+@tailwind utilities;
+
+@import "components/forms.css";
+
