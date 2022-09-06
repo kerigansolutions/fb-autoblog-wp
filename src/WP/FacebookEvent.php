@@ -37,10 +37,10 @@ class FacebookEvent extends FacebookObject {
   public function transform ($input)
   {
     $startDateTime = Carbon::parse($input->start_time);
-    $endDateTime = isset($input->end_time) ? Carbon::parse($input->end_time) : null;
+    $endDateTime = isset($input->end_time) ? Carbon::parse($input->end_time) : $startDateTime;
 
     $event_times = [];
-    $sortDate = $startDateTime->format('Ymd');
+    $sortDate = $startDateTime->format('YmdHi');
 
     if(isset($input->event_times)){
       foreach($input->event_times as $time){
@@ -77,7 +77,7 @@ class FacebookEvent extends FacebookObject {
       ]
     ];
 
-    print_r($output);
+    // print_r($output);
     // die();
 
     return $output;
