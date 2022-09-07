@@ -3,7 +3,7 @@
     <div class="mb-6 bg-gray-300 rounded px-4 py-3" >
       <div><strong>Number in DB:</strong> {{ objects.length }}
         <a
-          :href="'https://mexicobeach.test/wordpress/wp-admin/edit.php?post_type=' + endpoint"
+          :href="'/wordpress/wp-admin/edit.php?post_type=' + endpoint"
           class="text-primary underline ml-4"
           target="_blank"
         >manage</a></div>

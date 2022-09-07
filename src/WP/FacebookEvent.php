@@ -36,21 +36,23 @@ class FacebookEvent extends FacebookObject {
    */
   public function transform ($input)
   {
-    $startDateTime = Carbon::parse($input->start_time);
-    $endDateTime = isset($input->end_time) ? Carbon::parse($input->end_time) : $startDateTime;
+    $startDateTime = Carbon::parse($input->start_time)->setTimezone(wp_timezone_string());
+    $endDateTime = isset($input->end_time) ? Carbon::parse($input->end_time)->setTimezone(wp_timezone_string()) : null;
+
+    $now = Carbon::now()->setTimezone(wp_timezone_string());
 
     $event_times = [];
-    $sortDate = $startDateTime->format('YmdHi');
+    $sortDate = (int) $startDateTime->format('YmdHi');
 
     if(isset($input->event_times)){
       foreach($input->event_times as $time){
-        if(date('YmdHi',strtotime($time->start_time)) >= date('YmdHi')) {
-          array_unshift($event_times, $time);
+        if(Carbon::parse($time->start_time)->setTimezone(wp_timezone_string())->format('YmdHi')>= $now->format('YmdHi')) {
+            array_unshift($event_times, $time);
         }
       }
 
       if(isset($event_times[0])){
-        $sortDate = date('YmdHi', strtotime($event_times[0]->end_time));
+        $sortDate = Carbon::parse($event_times[0])->setTimezone(wp_timezone_string())->format('YmdHi');
       }
     }
 
@@ -59,8 +61,7 @@ class FacebookEvent extends FacebookObject {
       'post_content' => isset($input->description) ? $input->description : null,
       'post_title' => $input->id,
       'post_status' => 'publish',
-      'post_type' => 'kma-fb-event',
-      'post_date' => date('Y-m-d H:i:s', strtotime("-1 hour")),
+      'post_type' => $this->postType,
       'meta_input' => [
         'is_canceled' => $input->is_canceled,
         'is_draft' => $input->is_draft,

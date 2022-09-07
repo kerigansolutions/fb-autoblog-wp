@@ -12,7 +12,7 @@ class Admin
   protected $appId;
   protected $appSecret;
 
-  public $postsEnabled = true;
+  public $postsEnabled = false;
   public $eventsEnabled = false;
   public $photosEnabled = false;
   public $reviewsEnabled = false;
@@ -23,6 +23,11 @@ class Admin
     $this->facebookToken = get_option('facebook_token');
     $this->appSecret = get_option('facebook_app_secret');
     $this->appId = '353903931781568';
+
+    $this->postsEnabled = env('FB_POSTS_ENABLED', $this->postsEnabled);
+    $this->eventsEnabled = env('FB_EVENTS_ENABLED', $this->eventsEnabled);
+    $this->photosEnabled = env('FB_PHOTOS_ENABLED', $this->photosEnabled);
+    $this->reviewsEnabled = env('FB_REVIEWS_ENABLED', $this->reviewsEnabled);
   }
 
   /**

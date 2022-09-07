@@ -51,7 +51,7 @@ class FacebookPost extends FacebookObject {
 
     $output = [
       'ID' => 0,
-      'post_date' => Carbon::parse($input->created_time)->copy()->setTimezone('America/New_York')->format('Y-m-d H:i:s'),
+      'post_date' => Carbon::parse($input->created_time)->copy()->setTimezone(wp_timezone_string())->format('Y-m-d H:i:s'),
       'post_content' => $input->message,
       'post_title' => $input->id,
       'post_status' => 'publish',
