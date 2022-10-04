@@ -24,10 +24,21 @@ class Admin
     $this->appSecret = get_option('facebook_app_secret');
     $this->appId = '353903931781568';
 
-    $this->postsEnabled = env('FB_POSTS_ENABLED', $this->postsEnabled);
-    $this->eventsEnabled = env('FB_EVENTS_ENABLED', $this->eventsEnabled);
-    $this->photosEnabled = env('FB_PHOTOS_ENABLED', $this->photosEnabled);
-    $this->reviewsEnabled = env('FB_REVIEWS_ENABLED', $this->reviewsEnabled);
+    $this->setConfig();
+  }
+
+  public function setConfig () {
+    if (function_exists('env')) {
+      $this->postsEnabled = env('FB_POSTS_ENABLED', $this->postsEnabled);
+      $this->eventsEnabled = env('FB_EVENTS_ENABLED', $this->eventsEnabled);
+      $this->photosEnabled = env('FB_PHOTOS_ENABLED', $this->photosEnabled);
+      $this->reviewsEnabled = env('FB_REVIEWS_ENABLED', $this->reviewsEnabled);
+    } else {
+      $this->postsEnabled = defined('FB_POSTS_ENABLED') ? FB_POSTS_ENABLED : $this->postsEnabled;
+      $this->eventsEnabled = defined('FB_EVENTS_ENABLED') ? FB_EVENTS_ENABLED : $this->eventsEnabled;
+      $this->photosEnabled = defined('FB_PHOTOS_ENABLED') ? FB_PHOTOS_ENABLED : $this->photosEnabled;
+      $this->reviewsEnabled = defined('FB_REVIEWS_ENABLED') ? FB_REVIEWS_ENABLED : $this->reviewsEnabled;
+    }
   }
 
   /**
