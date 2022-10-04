@@ -52,7 +52,7 @@ class FacebookEvent extends FacebookObject {
       }
 
       if(isset($event_times[0])){
-        $sortDate = Carbon::parse($event_times[0])->setTimezone(wp_timezone_string())->format('YmdHi');
+        $sortDate = Carbon::parse($event_times[0]->start_time)->setTimezone(wp_timezone_string())->format('YmdHi');
       }
     }
 
