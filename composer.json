@@ -3,7 +3,8 @@
     "require": {
         "guzzlehttp/guzzle": "^7",
         "nesbot/carbon": "^2",
-        "symfony/dotenv": "^6.0"
+        "symfony/dotenv": "^6.0",
+        "vlucas/phpdotenv": "^5.4"
     },
     "autoload": {
         "psr-4" : {
