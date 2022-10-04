@@ -2,8 +2,8 @@
     "name": "kerigansolutions/fb-autoblog-wp",
     "require": {
         "guzzlehttp/guzzle": "^7",
-        "nesbot/carbon": "^2",
-        "vlucas/phpdotenv": "^5.4"
+        "vlucas/phpdotenv": "^5.4",
+        "illuminate/support": "^9.34"
     },
     "autoload": {
         "psr-4" : {
