@@ -29,16 +29,11 @@ class Admin
 
   public function setConfig () {
     if (function_exists('env')) {
-      $this->postsEnabled = env('FB_POSTS_ENABLED', $this->postsEnabled);
-      $this->eventsEnabled = env('FB_EVENTS_ENABLED', $this->eventsEnabled);
-      $this->photosEnabled = env('FB_PHOTOS_ENABLED', $this->photosEnabled);
-      $this->reviewsEnabled = env('FB_REVIEWS_ENABLED', $this->reviewsEnabled);
-    } else {
-      $this->postsEnabled = defined('FB_POSTS_ENABLED') ? FB_POSTS_ENABLED : $this->postsEnabled;
-      $this->eventsEnabled = defined('FB_EVENTS_ENABLED') ? FB_EVENTS_ENABLED : $this->eventsEnabled;
-      $this->photosEnabled = defined('FB_PHOTOS_ENABLED') ? FB_PHOTOS_ENABLED : $this->photosEnabled;
-      $this->reviewsEnabled = defined('FB_REVIEWS_ENABLED') ? FB_REVIEWS_ENABLED : $this->reviewsEnabled;
-    }
+      $this->postsEnabled = defined('FB_POSTS_ENABLED') ? FB_POSTS_ENABLED : env('FB_POSTS_ENABLED', $this->postsEnabled);
+      $this->eventsEnabled = defined('FB_EVENTS_ENABLED') ? FB_EVENTS_ENABLED : env('FB_EVENTS_ENABLED', $this->eventsEnabled);
+      $this->photosEnabled = defined('FB_PHOTOS_ENABLED') ? FB_PHOTOS_ENABLED : env('FB_PHOTOS_ENABLED', $this->photosEnabled);
+      $this->reviewsEnabled = defined('FB_REVIEWS_ENABLED') ? FB_REVIEWS_ENABLED : env('FB_REVIEWS_ENABLED', $this->reviewsEnabled);
+    } 
   }
 
   /**
