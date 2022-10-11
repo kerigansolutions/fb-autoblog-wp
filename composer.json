@@ -3,7 +3,7 @@
     "require": {
         "guzzlehttp/guzzle": "^7",
         "vlucas/phpdotenv": "^5.4",
-        "illuminate/support": "^9.34"
+        "illuminate/support": "^8"
     },
     "autoload": {
         "psr-4" : {
