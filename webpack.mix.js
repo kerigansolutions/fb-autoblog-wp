@@ -14,10 +14,9 @@ const mix = require("laravel-mix")
 mix
   .setResourceRoot("../")
   .setPublicPath("./dist")
-  .postCss("resources/styles/facebook-admin.css", "styles", [
+  .postCss("resources/styles/facebook-admin.css", "", [
     require("tailwindcss"),
     require("autoprefixer"),
   ])
-  .js("resources/scripts/facebook-admin.js", "scripts")
+  .js("resources/scripts/facebook-admin.js", "")
   .vue()
-  .sourceMaps()

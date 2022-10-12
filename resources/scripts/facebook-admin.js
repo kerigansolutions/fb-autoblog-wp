@@ -1,10 +1,12 @@
-import { createApp, defineAsyncComponent } from "vue";
+import { createApp } from "vue";
+import FacebookAuth from "./components/FacebookAuth.vue";
+import SyncTool from "./components/SyncTool.vue";
 
 const app = createApp({
 
   components: {
-    FacebookAuth: defineAsyncComponent(() => import('./components/FacebookAuth.vue')),
-    SyncTool: defineAsyncComponent(() => import('./components/SyncTool.vue')),
+    FacebookAuth: FacebookAuth,
+    SyncTool: SyncTool,
   },
 
   data: () => ({
