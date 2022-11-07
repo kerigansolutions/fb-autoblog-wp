@@ -10,11 +10,11 @@
     </div>
     <div class="flex space-x-6" >
       <button
-        @click="sync(4)"
+        @click="sync(numSync)"
         class="form-button bg-primary hover:bg-white border-2 border-transparent hover:border-primary text-white hover:text-primary rounded"
       >Sync</button>
       <button
-        @click="sync(99)"
+        @click="sync(numBuild)"
         class="form-button bg-accent hover:bg-white border-2 border-transparent hover:border-accent text-primary rounded"
       >Build</button>
       <div class="flex items-center">{{ status }}</div>
@@ -30,6 +30,14 @@ export default {
     endpoint: {
       type: String,
       default: ""
+    },
+    numSync: {
+      type: Number,
+      default: 4,
+    },
+    numBuild: {
+      type: Number,
+      default: 999,
     }
   },
 
@@ -60,7 +68,7 @@ export default {
         })
     },
 
-    sync ( num = 30 ) {
+    sync ( num = 4 ) {
       this.status = 'getting data...'
 
       fetch("/wp-json/kerigansolutions/v1/sync-" + this.endpoint + '?num=' + num, {

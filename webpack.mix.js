@@ -20,3 +20,8 @@ mix
   ])
   .js("resources/scripts/facebook-admin.js", "")
   .vue()
+
+if (mix.inProduction()) {
+  mix.version()
+}
+  

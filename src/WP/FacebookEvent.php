@@ -78,6 +78,8 @@ class FacebookEvent extends FacebookObject {
       ]
     ];
 
+    // echo $input->name . ': ' . $input->start_time . ' ' . $output['meta_input']['event_date'] . ' ' . (isset($output['meta_input']['event_times'][0]) ? $output['meta_input']['event_times'][0]->start_time : '') . PHP_EOL;
+
     // print_r($output);
     // die();
 
@@ -90,6 +92,15 @@ class FacebookEvent extends FacebookObject {
   public function service()
   {
     return new FacebookEvents($this->facebookPageID, $this->facebookToken);
+  }
+
+  /**
+   * Format async json response
+   */
+  public function sync ($request)
+  {
+    $num = $request->get_param('num');
+    $this->getRemote($num ?? 999);
   }
 
 }

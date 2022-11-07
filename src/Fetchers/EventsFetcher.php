@@ -30,6 +30,7 @@ class EventsFetcher implements DataFetcher
                 'GET',
                 '/' . $this->pageId .
                 '/events/?fields=' . self::EVENTS .
+                '&since=' . strtotime('-1 year') .
                 '&limit=' . $limit .
                 '&before=' . $before .
                 '&after=' . $after .

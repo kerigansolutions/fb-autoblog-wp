@@ -97,4 +97,13 @@ class FacebookPost extends FacebookObject {
     return $output;
   }
 
+  /**
+   * Format async json response
+   */
+  public function sync ($request)
+  {
+    $num = $request->get_param('num');
+    $this->getRemote($num ?? 4);
+  }
+
 }

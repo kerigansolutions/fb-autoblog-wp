@@ -4,6 +4,21 @@ use KeriganSolutions\FacebookFeed\WP\Admin;
 
 $facebook = new Admin();
 
+if (!function_exists('get_mix_asset')) {
+  function get_mix_asset($path)
+  {
+    $manifestDirectory = wp_normalize_path(dirname(__FILE__) . '/mix-manifest.json');
+
+    if (file_exists($manifestDirectory)) {
+      $manifest = json_decode(file_get_contents($manifestDirectory), true);
+      if (array_key_exists($path, $manifest)) {
+        return $manifest[$path];
+      }
+    }
+    return $path;
+  }
+}
+
 $tokenExpires    = $facebook->getTokenExpiryDate();
 $FacebookPageID  = (isset($_POST['facebook_page_id']) ? sanitize_text_field($_POST['facebook_page_id']) : get_option('facebook_page_id'));
 $FacebookToken   = (isset($_POST['facebook_token']) ? sanitize_text_field($_POST['facebook_token']) : get_option('facebook_token'));
@@ -22,7 +37,7 @@ if (isset($_POST['facebook_submit_secret_settings']) && $_POST['facebook_submit_
 }
 
 ?>
-<link href="/styles/facebook-admin.css" rel="stylesheet">
+<link href="/styles<?php echo get_mix_asset('/facebook-admin.css' ); ?>" rel="stylesheet">
 <div id="kma-facebook-settings" class="text-base" style="margin-left:-20px;">
   <div class="p-8 lg:p-12">
     <h1 class="font-bold text-xl lg:text-4xl text-primary">
@@ -127,20 +142,20 @@ if (isset($_POST['facebook_submit_secret_settings']) && $_POST['facebook_submit_
       <?php if(get_option('facebook_token') && $facebook->postsEnabled){ ?>
         <div class="col-span-12 md:col-span-6 p-8 bg-white shadow-lg shadow-primary/20" >
           <p class="text-gray-400 text uppercase font-bold mb-2">Facebook Posts</p>
-          <sync-tool id="kma-fb-posts-sync-tool" endpoint="kma-fb-post" ></sync-tool>
+          <sync-tool id="kma-fb-posts-sync-tool" endpoint="kma-fb-post" num-sync="4" num-build="200" ></sync-tool>
         </div>
       <?php } ?>
 
       <?php if(get_option('facebook_token') && $facebook->eventsEnabled){ ?>
         <div class="col-span-12 md:col-span-6 p-8 bg-white shadow-lg shadow-primary/20" >
           <p class="text-gray-400 text uppercase font-bold mb-2">Facebook Events</p>
-          <sync-tool id="kma-fb-events-sync-tool" endpoint="kma-fb-event" ></sync-tool>
+          <sync-tool id="kma-fb-events-sync-tool" endpoint="kma-fb-event" num-sync="200" num-build="200" ></sync-tool>
         </div>
       <?php } ?>
     </div>
   </div>
 </div>
-<script src="/scripts/facebook-admin.js" ></script>
+<script src="/scripts<?php echo get_mix_asset('/facebook-admin.js'); ?>" ></script>
 <script>
   window.fbAsyncInit = function () {
     FB.init({
