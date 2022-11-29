@@ -100,7 +100,7 @@ class FacebookEvent extends FacebookObject {
   public function sync ($request)
   {
     $num = $request->get_param('num');
-    $this->getRemote($num ?? 200);
+    $this->getRemote($num ?? 100);
   }
 
 }
