@@ -142,14 +142,14 @@ if (isset($_POST['facebook_submit_secret_settings']) && $_POST['facebook_submit_
       <?php if(get_option('facebook_token') && $facebook->postsEnabled){ ?>
         <div class="col-span-12 md:col-span-6 p-8 bg-white shadow-lg shadow-primary/20" >
           <p class="text-gray-400 text uppercase font-bold mb-2">Facebook Posts</p>
-          <sync-tool id="kma-fb-posts-sync-tool" endpoint="kma-fb-post" num-sync="4" num-build="160" ></sync-tool>
+          <sync-tool id="kma-fb-posts-sync-tool" endpoint="kma-fb-post" num-sync="4" num-build="100" ></sync-tool>
         </div>
       <?php } ?>
 
       <?php if(get_option('facebook_token') && $facebook->eventsEnabled){ ?>
         <div class="col-span-12 md:col-span-6 p-8 bg-white shadow-lg shadow-primary/20" >
           <p class="text-gray-400 text uppercase font-bold mb-2">Facebook Events</p>
-          <sync-tool id="kma-fb-events-sync-tool" endpoint="kma-fb-event" num-sync="100" num-build="160" ></sync-tool>
+          <sync-tool id="kma-fb-events-sync-tool" endpoint="kma-fb-event" num-sync="100" num-build="150" ></sync-tool>
         </div>
       <?php } ?>
     </div>
