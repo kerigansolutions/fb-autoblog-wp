@@ -31,6 +31,7 @@ class FacebookObject {
   public $pluralName = 'Facebook Objects';
   public $shortcode = 'fbobject';
   public $enabled = false;
+  public $syncNum = 30;
 
   /**
    * Get secrets and stuff from WordPress schema
@@ -90,7 +91,7 @@ class FacebookObject {
   public function sync ($request)
   {
     $num = $request->get_param('num');
-    $this->getRemote($num ?? 30);
+    $this->getRemote($num ?? $this->syncNum);
   }
 
   /**
@@ -156,11 +157,11 @@ class FacebookObject {
    * Contact Facebook's Graph API utilizing our composer package
    * for all the heavy lifting.
    */
-  public function getRemote ($num = 4)
+  public function getRemote ($num = 0)
   {
     try{
       $feed = $this->service();
-      $response = $feed->fetch($num);
+      $response = $feed->fetch($num > 0 ? $num : $this->syncNum);
     }catch(RequestException $e){
       $response = $e->getResponse()->getBody(true);
     }

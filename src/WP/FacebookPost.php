@@ -11,6 +11,7 @@ class FacebookPost extends FacebookObject {
   public $singularName = 'Facebook Post';
   public $pluralName = 'Facebook Posts';
   public $enabled = false;
+  public $syncNum = 4;
 
   /**
    * Contact the specified Facebook Service we need
@@ -103,7 +104,7 @@ class FacebookPost extends FacebookObject {
   public function sync ($request)
   {
     $num = $request->get_param('num');
-    $this->getRemote($num ?? 4);
+    $this->getRemote($num ?? $this->syncNum);
   }
 
 }

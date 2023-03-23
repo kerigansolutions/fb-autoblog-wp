@@ -12,6 +12,7 @@ class FacebookEvent extends FacebookObject {
   public $singularName = 'Facebook Event';
   public $pluralName = 'Facebook Events';
   public $enabled = false;
+  public $syncNum = 100;
 
   /**
    * format fields used in our view (the front-end)
@@ -190,7 +191,7 @@ class FacebookEvent extends FacebookObject {
   public function sync ($request)
   {
     $num = $request->get_param('num');
-    $this->getRemote($num ?? 100);
+    $this->getRemote($num ? $num : 100);
   }
 
 }
