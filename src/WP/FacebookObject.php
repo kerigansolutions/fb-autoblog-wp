@@ -119,7 +119,7 @@ class FacebookObject {
   {
 
     // mobile update or event with no content
-    if(isset($object->status_type) && ($object->status_type == 'mobile_status_update' && $object->message == '') || isset($object->status_type) && $object->status_type == 'created_event'){
+    if(isset($object->status_type) && $object->status_type == 'created_event'){
       return null; // silently discard
     }
 
