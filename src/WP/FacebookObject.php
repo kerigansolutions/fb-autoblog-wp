@@ -124,16 +124,26 @@ class FacebookObject {
     }
 
     $postArray = $this->transform($object);
-    $postExists = get_page_by_title($object->id, OBJECT, $this->postType);
+    $query = new \WP_Query(array(
+      'post_type'              => $this->postType,
+      'title'                  => $object->id,
+      'posts_per_page'         => 1,
+      'no_found_rows'          => true,
+      'ignore_sticky_posts'    => true,
+      'update_post_term_cache' => false,
+      'update_post_meta_cache' => false,
+    ));
+
+    // echo '<pre>',print_r($query->post),'</pre>';
 
     // If exists, update the post. Otherwise, add a new one
-    if(isset($postExists->ID)){
+    if(!empty( $query->post )){
 
       // Catch cancelled events that were added already
       if(isset($object->is_canceled) && $object->is_canceled){
-        wp_delete_post($postExists->ID);
+        wp_delete_post($query->post->ID);
       }else{
-        $postArray['ID'] = $postExists->ID;
+        $postArray['ID'] = $query->post->ID;
         wp_update_post($postArray);
       }
 
