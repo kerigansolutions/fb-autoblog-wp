@@ -201,7 +201,17 @@ class FacebookObject {
       );
     }
 
-    add_action('sync-' . $this->postType, [$this,'getRemote']);
+    add_action('clean-' . $this->postType, [$this,'getRemote']);
+
+    if(! wp_next_scheduled('clean-' . $this->postType)){
+      wp_schedule_event(
+        strtotime('01:00:00'),
+        'hourly',
+        'clean-' . $this->postType
+      );
+    }
+
+    add_action('clean-' . $this->postType, [$this,'cleanObjects']);
   }
 
   /**
@@ -227,6 +237,48 @@ class FacebookObject {
         'permission_callback' => '__return_true'
       ]
     );
+
+    // Gets resource from local schema
+    register_rest_route( 'kerigansolutions/v1', '/clean-' . $this->postType,
+      [
+        'methods'  => 'GET',
+        'callback' => [ $this, 'clean' ],
+        'permission_callback' => '__return_true'
+      ]
+    );
+  }
+
+  public function clean ($request) {
+    $num = $request->get_param('num');
+    $this->cleanObjects($num ?? $this->syncNum);
+  }
+
+  /**
+   * Get list from FB and local list to compare for posts deleted
+   */
+  public function cleanObjects($num = 0)
+  {
+    try{
+      $feed = $this->service();
+      $response = $feed->fetch($num > 0 ? $num : $this->syncNum);
+    }catch(RequestException $e){
+      $response = $e->getResponse()->getBody(true);
+    }
+
+    $remoteIds = array_map(function($post) {
+      return (string) $post->id;
+    }, $response->posts);
+
+    $posts = $this->query($num > 0 ? $num : $this->syncNum);
+    foreach($posts as $post){
+      if(!in_array($post->post_title, $remoteIds, true)) {
+        wp_delete_post($post->ID);
+      }
+    }
+    echo $this->pluralName . ' cleaned' . PHP_EOL;
+
+    die();
+
   }
 
   public function collection () {
