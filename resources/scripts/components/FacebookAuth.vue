@@ -64,6 +64,8 @@ export default {
     authorize () {
       let auth = this
 
+      let companies = []
+
       FB.login(function (response) {
         auth.accessToken = response.authResponse.accessToken
         auth.data_access_expiration_time = response.authResponse.data_access_expiration_time
@@ -75,7 +77,25 @@ export default {
 
         FB.api('/' + auth.userID + '/accounts', function (response) {
           console.log(response)
-          auth.businesses = response.data
+          companies = response.data
+
+          if(response.paging.next) {
+            fetch(response.paging.next, {
+              method: 'GET',
+              mode: 'cors',
+              cache: 'no-cache',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            }).then(r => r.json()).then(res => {
+              console.log(res)
+
+              if(res.data) {
+                auth.businesses = companies.concat(res.data)
+              }
+            })
+          }
+
         })
 
       }, {
