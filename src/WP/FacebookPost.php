@@ -64,30 +64,49 @@ class FacebookPost extends FacebookObject {
       ]
     ];
 
-    if(isset($input->attachments)){
-      $media = $input->attachments->data[0];
-      $output['meta_input']['attachments'] = $input->attachments->data;
-      $output['meta_input']['target_url'] = isset($media->target->url ) ? $media->target->url : '';
-      $output['meta_input']['image_src'] = isset($media->media->image->src ) ? $media->media->image->src : '';
-      $output['meta_input']['description'] = isset($media->description ) ? $media->description : '';
-      $output['meta_input']['media_type'] = isset($media->media_type ) ? $media->media_type : '';
-      $output['meta_input']['type'] = isset($media->type ) ? $media->type : '';
-      $output['meta_input']['title'] = isset($media->title ) ? $media->title : '';
-      $output['meta_input']['url'] = isset($media->url) ? $media->url : $input->permalink_url;
-      $output['meta_input']['unshimmed_url'] = isset($media->unshimmed_url) ? $media->url : $input->permalink_url;
-      $output['meta_input']['subattachments'] = [];
+    $media = isset($media->attachments->data[0]) ? $input->attachments->data[0] : false;
+    $output['meta_input']['attachments'] = isset($input->attachments->data) ? $input->attachments->data : '';
+    $output['meta_input']['actions'] = isset($input->actions) ? $input->actions : '';
+    $output['meta_input']['status_type'] = isset($input->status_type) ? $input->status_type : '';
+    $output['meta_input']['is_hidden'] = isset($input->is_hidden) ? $input->is_hidden : '';
+    $output['meta_input']['is_expired'] = isset($input->is_expired) ? $input->is_expired : '';
+    $output['meta_input']['is_published'] = isset($input->is_published) ? $input->is_published : '';
+    $output['meta_input']['permalink_url'] = isset($input->permalink_url) ? $input->permalink_url : '';
+    $output['meta_input']['timeline_visibility'] = isset($input->timeline_visibility) ? $input->timeline_visibility : '';
+    $output['meta_input']['updated_time'] = isset($input->updated_time) ? $input->updated_time : '';
+    $output['meta_input']['comments'] = isset($input->comments) ? $input->comments : '';
+    $output['meta_input']['from'] = isset($input->from) ? $input->from : '';
+    $output['meta_input']['fb_id'] = isset($input->id) ? $input->id : '';
+    $output['meta_input']['is_popular'] = isset($input->is_popular) ? $input->is_popular : '';
+    $output['meta_input']['is_spherical'] = isset($input->is_spherical) ? $input->is_spherical : '';
+    $output['meta_input']['shares'] = isset($input->shares) ? $input->shares : '';
+    $output['meta_input']['message'] = isset($input->message) ? $input->message : '';
+    $output['meta_input']['parent_id'] = isset($input->parent_id) ? $input->parent_id : '';
+    $output['meta_input']['privacy'] = isset($input->privacy) ? $input->privacy : '';
+    $output['meta_input']['promotable_id'] = isset($input->promotable_id) ? $input->promotable_id : '';
+    $output['meta_input']['promotion_status'] = isset($input->promotion_status) ? $input->promotion_status : '';
+    $output['meta_input']['subscribed'] = isset($input->subscribed) ? $input->subscribed : '';
+    $output['meta_input']['diff'] = isset($input->diff) ? $input->diff : '';
+    $output['meta_input']['target_url'] = isset($media->target->url ) ? $media->target->url : '';
+    $output['meta_input']['image_src'] = isset($media->media->image->src ) ? $media->media->image->src : '';
+    $output['meta_input']['description'] = isset($media->description ) ? $media->description : '';
+    $output['meta_input']['media_type'] = isset($media->media_type ) ? $media->media_type : '';
+    $output['meta_input']['type'] = isset($media->type ) ? $media->type : '';
+    $output['meta_input']['title'] = isset($media->title ) ? $media->title : '';
+    $output['meta_input']['url'] = isset($media->url) ? $media->url : $input->permalink_url;
+    $output['meta_input']['unshimmed_url'] = isset($media->unshimmed_url) ? $media->url : $input->permalink_url;
+    $output['meta_input']['subattachments'] = [];
 
-      if(isset($media->subattachments) && is_array($media->subattachments->data)){
-        foreach($media->subattachments->data as $attachment){
-          if($attachment->type == 'photo'){
-            $output['meta_input']['subattachments'][] = [
-              'type' => $attachment->type,
-              'src'  => $attachment->media->image->src,
-              'width' => $attachment->media->image->width,
-              'height' => $attachment->media->image->height,
-              'url' => $attachment->url,
-            ];
-          }
+    if(isset($media->subattachments) && is_array($media->subattachments->data)){
+      foreach($media->subattachments->data as $attachment){
+        if($attachment->type == 'photo'){
+          $output['meta_input']['subattachments'][] = [
+            'type' => $attachment->type,
+            'src'  => $attachment->media->image->src,
+            'width' => $attachment->media->image->width,
+            'height' => $attachment->media->image->height,
+            'url' => $attachment->url,
+          ];
         }
       }
     }
