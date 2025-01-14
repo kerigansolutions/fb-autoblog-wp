@@ -26,7 +26,26 @@ class FacebookPost extends FacebookObject {
    */
   public function fields ($post)
   {
-    $post->post_link = get_post_meta($post->ID, 'post_link', true);
+    $post->actions = get_post_meta($post->ID, 'actions', true);
+    $post->is_hidden = get_post_meta($post->ID, 'is_hidden', true);
+    $post->is_expired = get_post_meta($post->ID, 'is_expired', true);
+    $post->is_published = get_post_meta($post->ID, 'is_published', true);
+    $post->permalink_url = get_post_meta($post->ID, 'permalink_url', true);
+    $post->timeline_visibility = get_post_meta($post->ID, 'timeline_visibility', true);
+    $post->updated_time = get_post_meta($post->ID, 'updated_time', true);
+    $post->comments = get_post_meta($post->ID, 'comments', true);
+    $post->from = get_post_meta($post->ID, 'from', true);
+    $post->fb_id = get_post_meta($post->ID, 'fb_id', true);
+    $post->is_popular = get_post_meta($post->ID, 'is_popular', true);
+    $post->is_spherical = get_post_meta($post->ID, 'is_spherical', true);
+    $post->shares = get_post_meta($post->ID, 'shares', true);
+    $post->message = get_post_meta($post->ID, 'message', true);
+    $post->parent_id = get_post_meta($post->ID, 'parent_id', true);
+    $post->privacy = get_post_meta($post->ID, 'privacy', true);
+    $post->promotable_id = get_post_meta($post->ID, 'promotable_id', true);
+    $post->promotion_status = get_post_meta($post->ID, 'promotion_status', true);
+    $post->subscribed = get_post_meta($post->ID, 'subscribed', true);
+    $post->diff = get_post_meta($post->ID, 'diff', true);
     $post->full_image_url = get_post_meta($post->ID, 'full_image_url', true);
     $post->attachments = get_post_meta($post->ID, 'attachments', true);
     $post->type = get_post_meta($post->ID, 'type', true);
