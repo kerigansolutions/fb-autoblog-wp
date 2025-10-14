@@ -7,6 +7,7 @@ use Carbon\Carbon;
 class Post
 {
     public $data;
+    public $full_picture;
 
     public function __construct($data)
     {

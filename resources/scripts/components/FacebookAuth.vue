@@ -1,6 +1,10 @@
 <template>
   <div>
     <p v-if="businesses.length > 0" class="text-gray-400 text uppercase font-bold mb-2">Select a Facebook Business Page To Sync:</p>
+    <div v-else-if="accessToken && !loading" class="p-4 mb-4 border-error border-2" >
+      <p class="text-gray-800 text-lg lg:text-2xl text font-bold mb-2">No Facebook business pages found.</p>
+      <p class="text-gray-800 text mb-2">Did you log into the correct account? You must be an admin on the Business page you'd like to sync to your website.</p>
+    </div>
     <div
       v-for="business in businesses"
       :key="business.index"
@@ -35,7 +39,8 @@ export default {
       userID: undefined,
       status: undefined,
       longLivedToken: undefined,
-      businesses: []
+      businesses: [],
+      loading: true,
     }
   },
 
@@ -53,12 +58,13 @@ export default {
       })
         .then(r => r.json())
         .then((res) => {
-          console.log(res)
+          // console.log(res)
           this.longLivedToken = res.access_token;
           document.getElementById('facebooktoken').value = res.access_token;
         })
 
       this.businesses = []
+      this.loading = true
     },
 
     authorize () {
@@ -76,10 +82,11 @@ export default {
         auth.status = response.status
 
         FB.api('/' + auth.userID + '/accounts', function (response) {
-          console.log(response)
+          // console.log(response)
           companies = response.data
 
-          if(response.paging.next) {
+          if(response.data && response.paging && response.paging.next) {
+
             fetch(response.paging.next, {
               method: 'GET',
               mode: 'cors',
@@ -88,12 +95,18 @@ export default {
                 'Content-Type': 'application/json',
               },
             }).then(r => r.json()).then(res => {
-              console.log(res)
+              // console.log(res)
 
               if(res.data) {
                 auth.businesses = companies.concat(res.data)
               }
+
+              auth.loading = false
+              
             })
+          } else {
+            auth.businesses = companies;
+            auth.loading = false
           }
 
         })
