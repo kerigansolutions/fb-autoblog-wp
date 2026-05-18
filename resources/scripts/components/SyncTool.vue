@@ -19,6 +19,7 @@
       >Build</button>
       <div class="flex items-center">{{ status }}</div>
     </div>
+    <div v-if="errorMessage != ''" class="italic px-4 py-3">{{ errorMessage }}</div>
   </div>
 </template>
 
@@ -44,7 +45,8 @@ export default {
   data () {
     return {
       objects: [],
-      status: ''
+      status: '',
+      errorMessage: '',
     }
   },
 
@@ -81,9 +83,17 @@ export default {
       })
         .then(r => r.json())
         .then((res) => {
-          console.log(res)
-          this.get()
-          this.status = 'Success!'
+          let response = res
+          console.log(response)
+
+          if(res.data){
+            this.status = 'Error'
+            this.errorMessage = res.data.message
+          }else{
+            this.get()
+            this.status = 'Success'
+            this.errorMessage = ''
+          }
         })
     },
   }

@@ -173,7 +173,17 @@ class FacebookObject {
       $feed = $this->service();
       $response = $feed->fetch($num > 0 ? $num : $this->syncNum);
     }catch(RequestException $e){
-      $response = $e->getResponse()->getBody(true);
+      if ($e->hasResponse()) {
+        $statusCode = $e->getResponse()->getStatusCode();
+        $body = json_decode($e->getResponse()->getBody()->getContents());
+        // print_r($body);
+
+      } else {
+        $statusCode = 404;
+        $error = "No response received from server." . PHP_EOL;
+      }
+
+      wp_send_json_error($body->error, $statusCode);
     }
 
     if($response->posts){
@@ -183,7 +193,7 @@ class FacebookObject {
 
       wp_send_json_success();
     } else {
-      wp_send_json_error();
+      wp_send_json_error('no posts');
     }
 
   }
