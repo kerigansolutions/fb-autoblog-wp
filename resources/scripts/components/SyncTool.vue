@@ -19,7 +19,7 @@
       >Build</button>
       <div class="flex items-center">{{ status }}</div>
     </div>
-    <div v-if="errorMessage != ''" class="italic px-4 py-3">{{ errorMessage }}</div>
+    <div v-if="errorMessage != ''" class="bg-[#ffd3d3] rounded mt-6 px-4 py-3"><strong>Error detail:</strong> {{ errorMessage }}</div>
   </div>
 </template>
 
@@ -88,7 +88,7 @@ export default {
 
           if(res.data){
             this.status = 'Error'
-            this.errorMessage = res.data.message
+            this.errorMessage = res.data.message ?? res.data
           }else{
             this.get()
             this.status = 'Success'

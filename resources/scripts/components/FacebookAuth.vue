@@ -6,12 +6,12 @@
       <p class="text-gray-800 text mb-2">Did you log into the correct account? You must be an admin on the Business page you'd like to sync to your website.</p>
     </div>
     <div
-      v-for="business in businesses"
+      v-for="(business, index) in businesses"
       :key="business.index"
-      class="p-2 bg-gray-200 rounded flex items-center mb-1 border border-gray-300 group group-hover:bg-accent cursor-pointer"
+      class="px-4 py-2 bg-gray-200 rounded flex items-center gap-4 mb-1 border border-gray-300 group group-hover:bg-accent cursor-pointer"
       @click.prevent="selectBusiness(business)"
-    >
-      <strong class="text-primary px-4">{{ business.name }}</strong>
+    > <strong class="inline-block h-6 w-6 rounded-full bg-gray-200 text-gray-700 flex justify-center items-center">{{ index+1 }}</strong>
+      <strong class="text-primary">{{ business.name }}</strong>
       <span class="text-sm text-gray-800" > {{ business.id }}</span>
       <button class="px-3 py-1 ml-auto leading-none h-8 border-2 uppercase rounded text-primary border-primary group-hover:bg-primary group-hover:text-white group-hover:border-transparent" >select</button>
     </div>
@@ -70,8 +70,6 @@ export default {
     authorize () {
       let auth = this
 
-      let companies = []
-
       FB.login(function (response) {
         auth.accessToken = response.authResponse.accessToken
         auth.data_access_expiration_time = response.authResponse.data_access_expiration_time
@@ -83,7 +81,7 @@ export default {
 
         FB.api('/' + auth.userID + '/accounts', function (response) {
           // console.log(response)
-          companies = response.data
+          auth.businesses = response.data
 
           if(response.data && response.paging && response.paging.next) {
 
@@ -98,14 +96,33 @@ export default {
               // console.log(res)
 
               if(res.data) {
-                auth.businesses = companies.concat(res.data)
+                auth.businesses = auth.businesses.concat(res.data)
+
+                if(res.data && res.paging && res.paging.next) {
+
+                  fetch(res.paging.next, {
+                    method: 'GET',
+                    mode: 'cors',
+                    cache: 'no-cache',
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                  }).then(r => r.json()).then(res2 => {
+
+                    if(res2.data) {
+                      auth.businesses = auth.businesses.concat(res2.data)
+                    }
+
+                    auth.loading = false
+                    
+                  })
+                }
               }
 
               auth.loading = false
               
             })
           } else {
-            auth.businesses = companies;
             auth.loading = false
           }
 
