@@ -300,21 +300,21 @@ class FacebookObject {
    */
   public function createPostType()
   {
-    register_post_type( $this->postType,
-    array(
+    register_post_type( $this->postType, array(
       'labels' => array(
-        'name' => __( $this->pluralName ),
+        'name'          => __( $this->pluralName ),
         'singular_name' => __( $this->singularName )
       ),
-      'supports' => ['title','custom-fields'],
-      'public' => $this->enabled,
-      'has_archive' => false,
-      'rewrite' => false,
-      'exclude_from_search' => true,
-      'publicly_queryable' => false,
-      'show_in_menu' => $this->enabled,
-      'show_in_rest' => false,
-      'menu_icon' => 'dashicons-facebook',
+      'supports'            => ['title','editor','custom-fields'],
+      'public'              => $this->enabled,
+      'has_archive'         => false,
+      'rewrite'             => false,
+      'exclude_from_search' => true, // Hides from search
+      'show_in_nav_menus'   => false, // Hides from menus
+      'publicly_queryable'  => false,
+      'show_in_menu'        => $this->enabled,
+      'show_in_rest'        => false,
+      'menu_icon'           => 'dashicons-facebook',
     ));
   }
 
